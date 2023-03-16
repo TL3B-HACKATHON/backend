@@ -10,59 +10,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum Role {
   ADMIN
   USER
 }
 
 model User {
-  id            String          @id @default(uuid())
-  firstname     String
-  lastname      String
-  phone         String?
-  email         String          @unique
-  address       String?
-  picture       String?
-  password      String?
-  rtH           String?
-  rtP           String?
-  rtS           String?
-  secret        String?
-  role          Role            @default(USER)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @default(now()) @updatedAt
-  patient       Patient?        @relation("PatientToUser", fields: [patientId], references: [id])
-  healthPro     HealthProfessional? @relation("HealthProToUser", fields: [healthProId], references: [id])
+  id        String              @id @default(uuid())
+  firstname String
+  lastname  String
+  phone     String?
+  email     String              @unique
+  address   String?
+  picture   String?
+  password  String?
+  rtH       String?
+  rtP       String?
+  rtS       String?
+  secret    String?
+  role      Role                @default(USER)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @default(now()) @updatedAt
+  patient   Patient?
+  healthPro HealthProfessional?
   // Add other relationships here
 }
 
 model Patient {
-  id            String          @id @default(uuid())
-  patientId     String
-  user          User            @relation("PatientToUser", fields: [patientId], references: [id])
+  id            String         @id @default(uuid())
+  userID        String         @unique
+  user          User           @relation(fields: [userID], references: [id])
   healthRecords HealthRecord[]
   // Add other fields here
-  
 }
 
 model HealthProfessional {
-  id            String          @id @default(uuid())
-  healthProId   String
-  user          User            @relation("HealthProToUser", fields: [healthProId], references: [id])
+  id     String @id @default(uuid())
+  userID String @unique
+  user   User   @relation(fields: [userID], references: [id])
   // Add other fields here
-  
 }
 
 model HealthRecord {
-  id            String          @id @default(uuid())
-  patient       Patient         @relation(fields: [patientId], references: [id])
-  patientId     String
-  date          DateTime
-  category      HealthRecordCategory
-  data          Json
+  id        String               @id @default(uuid())
+  patient   Patient              @relation(fields: [patientId], references: [id])
+  patientId String
+  date      DateTime
+  category  HealthRecordCategory
+  data      Json
   // Add other fields here
- 
 }
 
 enum HealthRecordCategory {
