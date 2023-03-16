@@ -16,7 +16,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Prisma, Role } from '@prisma/client';
 import { Response } from 'express';
 import { ExtractCredentials } from 'src/common/decorators';
-import { Roles } from 'src/common/decorators/role.decorator';
 import { storageConfig } from '../common/storeConfig/storage.config';
 import { UsersService } from './users.service';
 import { PasswordDto, UserFindManyDto } from './dto';
