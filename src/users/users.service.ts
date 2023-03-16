@@ -4,18 +4,19 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/database/PrismaService';
 import * as bcrypt from 'bcrypt';
 import { PaginationParamsDto, readFile, removeFile } from 'src/common/helper';
 import { ConfigService } from '@nestjs/config';
 import { UserFindManyDto, PasswordDto } from './dto';
+import { Prisma, User } from '@prisma/client';
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService, private config: ConfigService) {}
 
   async create(createUserDto: Prisma.UserCreateInput) {
-    const userAlreadyExists = await this.prisma.user.findFirst({
+    const userAlreadyExists = await this.prisma.
+    user.findFirst({
       where: {
         email: {
           equals: createUserDto.email,

@@ -24,13 +24,13 @@ import { PasswordDto, UserFindManyDto } from './dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN)
   @Post()
   create(@Body() createUserDto: Prisma.UserCreateInput) {
     return this.usersService.create(createUserDto);
   }
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN)
   @Get()
   findAll(@Query('s') findManyDto: string) {
     let findMany: UserFindManyDto = {};
@@ -79,13 +79,13 @@ export class UsersController {
     return this.usersService.removeImage(id);
   }
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN,)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -94,7 +94,7 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
@@ -129,7 +129,7 @@ export class UsersController {
     return this.update(id, updateUserDto);
   }
 
-  @Roles(Role.ADMIN)
+  // @Roles(Role.ADMIN)
   @Delete('image')
   removeFile(@Body() path: { path: string }) {
     return this.usersService.removeFile(path.path);
