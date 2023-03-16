@@ -11,8 +11,8 @@ datasource db {
 }
 
 enum Role {
-  ADMIN
-  USER
+  HEALTH_PROFESSIONAL
+  PATIENT
 }
 
 model User {
@@ -28,32 +28,16 @@ model User {
   rtP       String?
   rtS       String?
   secret    String?
-  role      Role                @default(USER)
+  role      Role                @default(PATIENT)
   createdAt DateTime            @default(now())
   updatedAt DateTime            @default(now()) @updatedAt
-  patient   Patient?
-  healthPro HealthProfessional?
-  // Add other relationships here
-}
-
-model Patient {
-  id            String         @id @default(uuid())
-  userID        String         @unique
-  user          User           @relation(fields: [userID], references: [id])
   healthRecords HealthRecord[]
-  // Add other fields here
-}
-
-model HealthProfessional {
-  id     String @id @default(uuid())
-  userID String @unique
-  user   User   @relation(fields: [userID], references: [id])
-  // Add other fields here
+  // Add other relationships here
 }
 
 model HealthRecord {
   id        String               @id @default(uuid())
-  patient   Patient              @relation(fields: [patientId], references: [id])
+  patient   User              @relation(fields: [patientId], references: [id])
   patientId String
   date      DateTime
   category  HealthRecordCategory

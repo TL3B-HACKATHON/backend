@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Presence" ALTER COLUMN "shiftStart" DROP DEFAULT,
-ALTER COLUMN "shiftEnd" DROP NOT NULL;
