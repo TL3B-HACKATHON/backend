@@ -9,6 +9,7 @@ import { UsersService } from './users/users.service';
 
 import { UsersModule } from './users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { AutorizationsModule } from './autorizations/autorizations.module';
 
 @Module({
   imports: [
@@ -18,8 +19,10 @@ import { AuthenticationModule } from './authentication/authentication.module';
     }),
     UsersModule,
     AuthenticationModule,
+    AutorizationsModule,
   ],
   controllers: [],
+
   providers: [
     UsersService,
     PrismaService,

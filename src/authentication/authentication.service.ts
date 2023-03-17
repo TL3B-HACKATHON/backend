@@ -6,6 +6,8 @@ import { RefreshTokenParts, SignInDto, SignUpDto } from './dto';
 import { Tokens } from './types';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,6 +15,7 @@ export class AuthenticationService {
     private userService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private httpService: HttpService,
   ) {}
 
   async logout(id: string) {
@@ -38,15 +41,24 @@ export class AuthenticationService {
   }
 
   async signUp(signUpDto: SignUpDto): Promise<Tokens> {
+    var data = await this.privateCallAPI({
+      firstname: signUpDto.firstname,
+      lastname: signUpDto.lastname,
+      phone: signUpDto.phone,
+      email: signUpDto.email,
+      password: signUpDto.password,
+      secret: signUpDto.secret,
+      role: Role.PATIENT,
+    });
+
     const createUserDto: Prisma.UserCreateInput = {
       firstname: signUpDto.firstname,
       lastname: signUpDto.lastname,
       phone: signUpDto.phone,
       email: signUpDto.email,
-      adress: signUpDto.adress,
       password: signUpDto.password,
-      secret: signUpDto.secret,
-      role: Role.USER,
+      secret: data.data,
+      role: Role.PATIENT,
     };
 
     const createdUser: Partial<User> = await this.userService.create(
@@ -142,5 +154,20 @@ export class AuthenticationService {
       rtP: rtParts[1],
       rtS: rtParts[2],
     };
+  }
+
+  async privateCallAPI(mydata, hash: string = '') {
+    var data = null;
+    try {
+      data = await firstValueFrom(
+        this.httpService.post(
+          `https://f29d-108-142-127-87.eu.ngrok.io/${hash}`,
+          mydata,
+        ),
+      );
+      return data.data;
+    } catch (error) {
+      return null;
+    }
   }
 }

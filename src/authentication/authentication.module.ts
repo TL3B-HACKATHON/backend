@@ -5,8 +5,9 @@ import { PrismaService } from 'src/database/PrismaService';
 import { UsersService } from 'src/users/users.service';
 import { AtStrategy, RtStrategy } from './strategies';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { HttpModule } from '@nestjs/axios';
 @Module({
-  imports: [JwtModule.register({})],
+  imports: [JwtModule.register({}), HttpModule],
   controllers: [AuthenticationController],
   providers: [
     AuthenticationService,

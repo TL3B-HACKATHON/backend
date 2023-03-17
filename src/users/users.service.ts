@@ -15,8 +15,7 @@ export class UsersService {
   constructor(private prisma: PrismaService, private config: ConfigService) {}
 
   async create(createUserDto: Prisma.UserCreateInput) {
-    const userAlreadyExists = await this.prisma.
-    user.findFirst({
+    const userAlreadyExists = await this.prisma.user.findFirst({
       where: {
         email: {
           equals: createUserDto.email,

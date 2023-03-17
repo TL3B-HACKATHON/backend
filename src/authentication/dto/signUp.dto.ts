@@ -10,8 +10,6 @@ export class SignUpDto {
   phone: string;
   @IsEmail()
   email: string;
-  @IsString()
-  adress: string;
   password?: string | null;
   secret?: string | null;
 }

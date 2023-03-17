@@ -14,7 +14,6 @@ const fakeUser = async (role: Role): Promise<Prisma.UserCreateInput> => {
     email: firstName + '@mail.com',
     phone: faker.phone.number(),
     role: role,
-    adress: faker.address.streetAddress(false),
   };
 };
 
@@ -26,7 +25,7 @@ export const generateUsers = (
 ): Promise<Prisma.UserCreateInput[]> => {
   const users = new Array(nbr).fill(undefined);
   const returnedUsers = Promise.all(
-    users.map((user) => (user = fakeUser(Role.USER))),
+    users.map((user) => (user = fakeUser(Role.PATIENT))),
   );
   return returnedUsers;
 };

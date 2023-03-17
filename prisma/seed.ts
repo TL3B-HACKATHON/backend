@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 const ENTITY_COUNT = {
-  USERS: 50,
+  USERS: 10,
 };
 
 async function main() {
@@ -20,8 +20,7 @@ async function main() {
         phone: '09120190129',
         password: await bcrypt.hash('superadmin', 10),
         email: 'superadmin@gmail.com',
-        adress: 'superadmin',
-        role: 'ADMIN',
+        role: 'PATIENT',
       },
       {
         firstname: 'user',
@@ -29,8 +28,7 @@ async function main() {
         phone: '09120190129',
         password: await bcrypt.hash('user', 10),
         email: 'user@gmail.com',
-        adress: 'user',
-        role: 'USER',
+        role: 'HEALTH_PROFESSIONAL',
       },
     ],
   });
